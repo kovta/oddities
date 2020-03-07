@@ -1,0 +1,18 @@
+server:
+  port: 8088
+  servlet-context.path: /api/v0/odd-svc/
+spring:
+  datasource:
+    url: jdbc:h2:file:./db/odd
+    driverClassName: org.h2.Driver
+    username: usr
+    password: pwd
+  jpa:
+    hibernate.ddl-auto: none
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2.console:
+    enabled: true
+    path: /h2-console
+    settings:
+      trace: false
+      web-allow-others: false

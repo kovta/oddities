@@ -1,0 +1,38 @@
+plugins {
+    id "java"
+    id "org.springframework.boot" version "2.2.5.RELEASE"
+    id "io.spring.dependency-management" version "1.0.8.RELEASE"
+    id "io.freefair.lombok" version "5.0.0-rc4"
+    id "com.diffplug.gradle.spotless" version "3.27.2"
+}
+
+group 'com.kota.adv'
+version '0.1.-SNAPSHOT'
+
+sourceCompatibility = 13
+
+repositories {
+    mavenCentral()
+}
+
+ext.springBootVersion = '2.2.5.RELEASE'
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+
+    compile  "com.h2database:h2:1.4.200"
+    implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+
+    testCompile "junit:junit:4.12"
+}
+
+compileJava.dependsOn("spotlessJavaApply")
+spotless {
+    java {
+        target project.fileTree(project.rootDir) {
+            include '**/*.java'
+        }
+        googleJavaFormat('1.6')
+        endWithNewline()
+    }
+}
