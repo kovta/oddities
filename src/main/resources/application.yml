@@ -11,8 +11,10 @@ spring:
     hibernate.ddl-auto: none
     database-platform: org.hibernate.dialect.H2Dialect
   h2.console:
-    enabled: true
+    enabled: false
     path: /h2-console
     settings:
       trace: false
       web-allow-others: false
+springdoc.api-docs.path: /docs/
+springdoc.swagger-ui.path: /docs-ui.html

@@ -3,6 +3,8 @@ package com.kota.adv.api;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
+import com.kota.adv.api.model.OrderListRequest;
+import com.kota.adv.api.model.OrderPlacementRequest;
 import com.kota.adv.dao.model.Order;
 import com.kota.adv.svc.OrderService;
 import java.time.LocalDateTime;
@@ -18,15 +20,14 @@ public class OrderController {
 
   @GetMapping
   @ResponseStatus(OK)
-  public List<Order> retrieveOrders(
-      @RequestParam("start") String start, @RequestParam("end") String end) {
-    return service.fetchOrders(LocalDateTime.parse(start), LocalDateTime.parse(end));
+  public List<Order> retrieveOrders(@RequestBody OrderListRequest req) {
+    return service.fetchOrders(
+        LocalDateTime.parse(req.getStart()), LocalDateTime.parse(req.getEnd()));
   }
 
   @PostMapping
   @ResponseStatus(CREATED)
-  public Order placeOrder(
-      @RequestParam("buyer") String buyer, @RequestParam("products") List<Long> products) {
-    return service.place(buyer, products);
+  public Order placeOrder(@RequestBody OrderPlacementRequest req) {
+    return service.place(req.getBuyer(), req.getProducts());
   }
 }

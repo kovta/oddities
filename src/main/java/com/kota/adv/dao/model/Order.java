@@ -1,5 +1,6 @@
 package com.kota.adv.dao.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.*;
@@ -11,11 +12,14 @@ import lombok.Data;
 public class Order {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(name = "buyer", nullable = false)
   private String buyer;
+
+  @Column(name = "value", nullable = false)
+  private BigDecimal value;
 
   @Column(name = "time", nullable = false)
   private LocalDateTime time;

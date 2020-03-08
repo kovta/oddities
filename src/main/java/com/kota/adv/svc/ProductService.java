@@ -25,6 +25,7 @@ public class ProductService {
   }
 
   public Product save(Product p) {
+    p.setLineId(UUID.randomUUID());
     p.setStartTime(LocalDateTime.now());
     return repository.save(p);
   }

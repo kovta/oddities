@@ -4,10 +4,11 @@ plugins {
     id "io.spring.dependency-management" version "1.0.8.RELEASE"
     id "io.freefair.lombok" version "5.0.0-rc4"
     id "com.diffplug.gradle.spotless" version "3.27.2"
+    id "com.google.cloud.tools.jib" version "2.1.0"
 }
 
 group 'com.kota.adv'
-version '0.1.-SNAPSHOT'
+version '0.1.0-SNAPSHOT'
 
 sourceCompatibility = 13
 
@@ -17,18 +18,37 @@ repositories {
 
 ext.springBootVersion = '2.2.5.RELEASE'
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
-    compile "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
-
-    compile  "com.h2database:h2:1.4.200"
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    implementation "com.h2database:h2:1.4.200"
     implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+    implementation "org.springdoc:springdoc-openapi-core:1.1.49"
+    implementation "org.springdoc:springdoc-openapi-ui:1.1.49"
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.3.1"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.3.1"
-
     testImplementation "io.rest-assured:rest-assured:4.2.0"
     testImplementation "io.rest-assured:json-path:4.2.0"
     testImplementation "io.rest-assured:xml-path:4.2.0"
+    testImplementation "org.mockito:mockito-core:3.3.0"
+
+}
+
+bootJar {
+    archiveBaseName = "odd-svc"
+    archiveVersion =  "0.1.0"
+}
+jib {
+    from {
+        image = 'openjdk:13-slim'
+    }
+    to {
+        image = 'kovta/odd-svc'
+    }
+    container {
+        mainClass = 'com.kota.adv.App'
+    }
 }
 
 compileJava.dependsOn("spotlessJavaApply")
