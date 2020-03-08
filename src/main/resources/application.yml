@@ -1,6 +1,6 @@
 server:
   port: 8088
-  servlet-context.path: /api/v0/odd-svc/
+  servlet.context-path: /api/v0/odd-svc/
 spring:
   datasource:
     url: jdbc:h2:file:./db/odd

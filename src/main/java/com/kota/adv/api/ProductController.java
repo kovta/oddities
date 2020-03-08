@@ -1,5 +1,8 @@
 package com.kota.adv.api;
 
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
+
 import com.kota.adv.dao.model.Product;
 import com.kota.adv.svc.ProductService;
 import java.util.List;
@@ -8,29 +11,25 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "products")
-public class ProductsController {
+public class ProductController {
 
   @Autowired private ProductService service;
 
   @GetMapping
+  @ResponseStatus(OK)
   public List<Product> retrieveProducts() {
     return service.fetchProducts();
   }
 
   @PostMapping
-  public Product createProduct(
-      @RequestParam("name") String name,
-      @RequestParam("description") String description,
-      @RequestParam("price") Double price) {
-    return service.save(name, description, price);
+  @ResponseStatus(CREATED)
+  public Product createProduct(@RequestBody Product product) {
+    return service.save(product);
   }
 
-  @PostMapping
-  public Product updateProduct(
-      @RequestParam("id") Long id,
-      @RequestParam("name") String name,
-      @RequestParam("description") String description,
-      @RequestParam("price") Double price) {
-    return service.save(id, name, description, price);
+  @PatchMapping("/{id}")
+  @ResponseStatus(CREATED)
+  public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
+    return service.save(id, product);
   }
 }

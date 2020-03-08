@@ -19,9 +19,7 @@ public class OrderService {
   @Autowired private ProductRepository productRepository;
 
   public List<Order> fetchOrders(LocalDateTime from, LocalDateTime to) {
-    return StreamSupport.stream(repository.findAll().spliterator(), false)
-        .filter(order -> order.getTime().isAfter(from) && order.getTime().isBefore(to))
-        .collect(toList());
+    return repository.findByTimeBetween(from, to);
   }
 
   public Order place(String buyer, List<Long> productList) {
